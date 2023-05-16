@@ -136,6 +136,7 @@ function viewAllEmployees() {
   });
 }
 
+// Add A Department
 function addDepartment() {
   inquirer
     .prompt({
@@ -154,4 +155,55 @@ function addDepartment() {
     });
 }
 
+// Add a new role
+function addRole() {
+  let departments = {
+    name: [],
+    id: [],
+  };
+  db.query("SELECT * FROM department", (err, result) => {
+    if (err) throw err;
+    for (i of result) {
+      departments.name.push(i.name);
+      departments.id.push(i.id);
+    }
+  });
+  //const departmentList = result.map((data) => data.name);
+
+  inquirer
+    .prompt([
+      { type: "input", name: "title", message: "Enter job title: " },
+      {
+        type: "input",
+        name: "salary",
+        message: "Enter salary for the role: ",
+        validate: (salary) => {
+          if (isNaN(salary) || salary < 0) {
+            return "Please enter a number";
+          }
+          return true;
+        },
+      },
+      {
+        type: "list",
+        name: "department",
+        message: "Select the department associated with this role: ",
+        choices: departments.name,
+      },
+    ])
+    .then((answer) => {
+      const title = answer.title;
+      const salary = answer.salary;
+      const departmentIndex = departments.name.indexOf(answer.department);
+      const department_id = departments.id[departmentIndex];
+      const params = [title, salary, department_id];
+      const sqlQuery =
+        "INSERT INTO role (title,salary,department_id) VALUES (?,?,?)";
+      db.query(sqlQuery, params, (err, result) => {
+        if (err) throw err;
+        console.log(`${title}  successfully added to the roles in database!`);
+        startProgram();
+      });
+    });
+}
 startProgram();
