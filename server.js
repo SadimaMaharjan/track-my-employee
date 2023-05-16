@@ -22,7 +22,7 @@ const db = mysql.createConnection(
     host: "localhost",
     user: "root",
     password: "",
-    database: employeetracker_db,
+    database: "employeetracker_db",
   },
   console.log("Connected to the EmployeeTracker database")
 );
@@ -105,6 +105,14 @@ function startProgram() {
     });
 }
 
-function viewAllDepartments() {}
+function viewAllDepartments() {
+  const sqlQuery =
+    "SELECT department.id AS id,department.name AS name FROM department";
+  db.query(sqlQuery, (err, result) => {
+    if (err) throw err;
+    console.table(result);
+    startProgram();
+  });
+}
 
 startProgram();
