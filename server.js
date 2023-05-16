@@ -279,4 +279,63 @@ function addEmployee() {
       });
     });
 }
+
+// Update Employee Role
+function updateEmployeeRole() {
+  let roles = {
+    id: [],
+    title: [],
+  };
+
+  db.query("SELECT * FROM role", (err, result) => {
+    if (err) throw err;
+    for (i of result) {
+      roles.title.push(i.title);
+      roles.id.push(i.id);
+    }
+  });
+  let employeeList = {
+    id: [],
+    name: [],
+  };
+  db.query("SELECT * FROM employee", (err, result) => {
+    if (err) throw err;
+    for (i of result) {
+      employeeList.name.push(i.first_name + " " + i.last_name);
+      employeeList.id.push(i.id);
+    }
+
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "name",
+          message: "Select the employee you want to update: ",
+          choices: employeeList.name,
+        },
+        {
+          type: "list",
+          name: "role",
+          message: "Select the updated role of employee: ",
+          choices: roles.title,
+        },
+      ])
+      .then((answers) => {
+        const roleIndex = roles.title.indexOf(answers.role);
+        const role_id = roles.id[roleIndex];
+        const employeeIndex = employeeList.name.indexOf(answers.name);
+        const employee_id = employeeList.id[employeeIndex];
+        const params = [role_id, employee_id];
+        const sqlQuery = "UPDATE employee SET role_id=? WHERE id=?";
+
+        db.query(sqlQuery, params, (err, result) => {
+          if (err) throw err;
+          console.log(
+            `Successfully updated ${answers.name}'s role in database!`
+          );
+          startProgram();
+        });
+      });
+  });
+}
 startProgram();
