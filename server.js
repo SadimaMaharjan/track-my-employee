@@ -206,4 +206,77 @@ function addRole() {
       });
     });
 }
+
+// Add a new employee
+function addEmployee() {
+  let roles = {
+    id: [],
+    title: [],
+  };
+
+  db.query("SELECT * FROM role", (err, result) => {
+    if (err) throw err;
+    for (i of result) {
+      roles.title.push(i.title);
+      roles.id.push(i.id);
+    }
+  });
+  let employees = {
+    id: [],
+    name: [],
+  };
+  db.query("SELECT * FROM employee", (err, result) => {
+    if (err) throw err;
+    for (i of result) {
+      employees.name.push(i.first_name + " " + i.last_name);
+      employees.id.push(i.id);
+    }
+  });
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "Enter first name of the employee: ",
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "Enter last name of the employee: ",
+      },
+      {
+        type: "list",
+        name: "role",
+        message: "Select the role of employee: ",
+        choices: roles.title,
+      },
+      {
+        type: "list",
+        name: "manager",
+        message: "Select manager for the employee: ",
+        choices: employees.name,
+      },
+    ])
+    .then((answers) => {
+      const roleIndex = roles.title.indexOf(answers.role);
+      const role_id = roles.id[roleIndex];
+      const managerIndex = employees.name.indexOf(answers.manager);
+      const manager_id = employees.id[managerIndex];
+      const sqlQuery =
+        "INSERT INTO employee (first_name,last_name,role_id,manager_id) VALUES (?,?,?,?)";
+      const params = [
+        answers.first_name,
+        answers.last_name,
+        role_id,
+        manager_id,
+      ];
+      db.query(sqlQuery, params, (err, result) => {
+        if (err) throw err;
+        console.log(
+          `${answers.first_name} ${answers.last_name}  successfully added to the employee list in database!`
+        );
+        startProgram();
+      });
+    });
+}
 startProgram();
