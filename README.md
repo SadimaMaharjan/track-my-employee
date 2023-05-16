@@ -39,3 +39,5 @@ The database schema is as shown in the following image:
 ## Walkthrough Video
 
 The following video shows the functionality of this application:
+
+[Walkthrough Video Link](./assets/images/Walkthrough-video_employee-tracker.mp4)
