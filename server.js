@@ -80,27 +80,27 @@ function startProgram() {
         case "Update An Employee Role":
           updateEmployeeRole();
           break;
-        case "Update Employee Managers":
-          updateEmployeeManager();
-          break;
-        case "View Employees By Manager":
-          viewEmployeeByManager();
-          break;
-        case "View Employees By Department":
-          viewemployeesByDepartment();
-          break;
-        case "Delete Department":
-          deleteDepartment();
-          break;
-        case "Delete Role":
-          deleteRole();
-          break;
-        case "Delete Employee":
-          deleteEmployee();
-          break;
-        case "View Total Utilised Budget Of A Department":
-          viewTotalBudget();
-          break;
+        // case "Update Employee Managers":
+        //   updateEmployeeManager();
+        //   break;
+        // case "View Employees By Manager":
+        //   viewEmployeeByManager();
+        //   break;
+        // case "View Employees By Department":
+        //   viewemployeesByDepartment();
+        //   break;
+        // case "Delete Department":
+        //   deleteDepartment();
+        //   break;
+        // case "Delete Role":
+        //   deleteRole();
+        //   break;
+        // case "Delete Employee":
+        //   deleteEmployee();
+        //   break;
+        // case "View Total Utilised Budget Of A Department":
+        //   viewTotalBudget();
+        //   break;
       }
     });
 }
