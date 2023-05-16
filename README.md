@@ -1,6 +1,6 @@
 # track-my-employee
 
-A Node.js application that manages employee database.
+A Node.js application that manages employee database. It uses Node.js, Inquirer, and MySQL.
 
 ## User Story
 
@@ -31,3 +31,11 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 ```
+
+The database schema is as shown in the following image:
+
+![Database schema includes tables labeled “employee,” role,” and “department.”](./assets/images/12-sql-homework-demo-01.png)
+
+## Walkthrough Video
+
+The following video shows the functionality of this application:
