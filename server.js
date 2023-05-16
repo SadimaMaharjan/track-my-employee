@@ -125,4 +125,15 @@ function viewAllRoles() {
     startProgram();
   });
 }
+
+function viewAllEmployees() {
+  const sqlQuery =
+    "SELECT employee.id AS id,employee.first_name,employee.last_name,role.title,department.name AS department,salary,CONCAT(manager.first_name,' ',manager.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id=role.id LEFT JOIN department ON department.id=role.department_id LEFT JOIN employee AS manager ON employee.manager_id=manager.id ORDER BY employee.id";
+  db.query(sqlQuery, (err, result) => {
+    if (err) throw err;
+    console.table(result);
+    startProgram();
+  });
+}
+
 startProgram();
