@@ -105,6 +105,7 @@ function startProgram() {
     });
 }
 
+//View All Departments
 function viewAllDepartments() {
   const sqlQuery =
     "SELECT department.id AS id,department.name AS name FROM department";
@@ -115,4 +116,13 @@ function viewAllDepartments() {
   });
 }
 
+//View All Roles
+function viewAllRoles() {
+  const sqlQuery = "SELECT * FROM role";
+  db.query(sqlQuery, (err, result) => {
+    if (err) throw err;
+    console.table(result);
+    startProgram();
+  });
+}
 startProgram();
